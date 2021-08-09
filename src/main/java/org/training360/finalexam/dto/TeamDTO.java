@@ -17,5 +17,5 @@ public class TeamDTO {
 
     private String name;
 
-    private List<Player> players;
+    private List<PlayerDTO> players;
 }
