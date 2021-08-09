@@ -7,11 +7,11 @@ import java.net.URI;
 
 public class EntityNotFoundException extends AbstractThrowableProblem {
 
-    public EntityNotFoundException() {
-        super(URI.create("teams/not-found"),
+    public EntityNotFoundException(String entity) {
+        super(URI.create(entity + "/not-found"),
                 "Not found",
                 Status.NOT_FOUND,
-                "Teams not found"
+                entity + " not found"
         );
     }
 }

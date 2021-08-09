@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.training360.finalexam.command.CreatePlayerCommand;
 import org.training360.finalexam.dto.PlayerDTO;
 import org.training360.finalexam.entity.Player;
+import org.training360.finalexam.exception.EntityNotFoundException;
 import org.training360.finalexam.repository.PlayerRepository;
 
 import java.lang.reflect.Type;
@@ -34,7 +35,7 @@ public class PlayerService {
 
     public void deleteById(long id) {
         Player player = playerRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Nincs ilyen id-jű játékos"));
+                .orElseThrow(() -> new EntityNotFoundException("players"));
         playerRepo.delete(player);
     }
 }

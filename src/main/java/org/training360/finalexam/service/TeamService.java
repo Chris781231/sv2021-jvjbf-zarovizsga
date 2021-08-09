@@ -43,14 +43,14 @@ public class TeamService {
 
     public void deleteById(long id) {
         Team team = teamRepo.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("teams"));
         teamRepo.delete(team);
     }
 
     @Transactional
     public TeamDTO addNewPlayerToTeamById(long id, CreatePlayerCommand command) {
         Team team = teamRepo.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("teams"));
         Player player = new Player(command.getName(), command.getBirthDate(), command.getPositionType());
         team.addPlayer(player);
         return modelMapper.map(team, TeamDTO.class);
@@ -59,9 +59,9 @@ public class TeamService {
     @Transactional
     public TeamDTO addExistingPlayerToTeamById(long id, UpdateWithExistingPlayerCommand command) {
         Team team  = teamRepo.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("teams"));
         Player player = playerRepo.findById(command.getPlayerId())
-                .orElseThrow(() -> new IllegalArgumentException("Nincs ilyen id-jű játékos"));
+                .orElseThrow(() -> new EntityNotFoundException("players"));
         if (isValidTransfer(player, team)) {
             team.addPlayer(player);
         } else {
